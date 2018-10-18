@@ -1,5 +1,9 @@
 # posenet-vue-example
 
+single/multi human pose detection example. :)
+
+<img src="./screenshot.png">
+
 ## Project setup
 ```
 npm install

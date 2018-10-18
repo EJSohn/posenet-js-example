@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img id='target' alt="Charlie cox" src="./assets/Charlie-Cox-Matt-Murdock-Daredevil-842002.jpg">
     <HelloWorld msg="This is my posenet example :)"/>
   </div>
 </template>

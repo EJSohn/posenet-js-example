@@ -1,7 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>{{ pose || 'loading..'}}</p>
+    <img id='target-single' alt="Charlie cox" src="../assets/Charlie-Cox-Matt-Murdock-Daredevil-842002.jpg">
+    <p>{{ poseSingle || 'loading..'}}</p>
+    <img id='target-multi' alt="Infinity war" src="../assets/InfinityWar5aa86b6fdaeb5.0.jpg">
+    <p>{{ poseMulti || 'loading..'}}</p>
   </div>
 </template>
 
@@ -13,7 +16,8 @@ export default {
   props: {
     msg: String,
     net: null,
-    pose: null
+    poseSingle: null,
+    poseMulti: null
   },
   mounted: async function() {
     this.net = await posenet.load();
@@ -21,12 +25,23 @@ export default {
   },
   methods: {
     detect: async function() {
+      // for single detection
       let imageScaleFactor = 0.50;
       let flipHorizontal = false;
       let outputStride = 16;
 
-      let imageElement = document.getElementById('target');
-      this.pose = await this.net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
+      let imageElementSingle = document.getElementById('target-single');
+      this.poseSingle = await this.net.estimateSinglePose(
+        imageElementSingle, imageScaleFactor, flipHorizontal, outputStride);
+
+      // for multiple detection
+      let maxPoseDetections = 5;
+      let scoreThreshold = 0.5;
+      let nmsRadius = 20;
+
+      let imageElementMulti = document.getElementById('target-multi');
+      this.poseMulti = await this.net.estimateMultiplePoses(
+        imageElementMulti, imageScaleFactor, flipHorizontal, outputStride, maxPoseDetections, scoreThreshold, nmsRadius);
     }
   }
 }
